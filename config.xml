@@ -1,34 +1,25 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.example.diceroll" version="1.0.0"
-        xmlns="http://www.w3.org/ns/widgets"
-        xmlns:cdv="http://cordova.apache.org/ns/1.0">
-
+<widget id="com.example.diceroll" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Dice Roll</name>
     <description>Application de Dice Roll simple en HTML/CSS/JS</description>
     <author email="wahab.inf@gmail.com">Ramdani Abdelouahab</author>
-
-    <!-- الصفحة الرئيسية -->
     <content src="index.html"/>
-
-    <!-- السماح بالوصول -->
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
 
-    <!-- ✅ تعريف أيقونات وسplash للـ Android -->
-    <platform name="android">
-        <!-- الأيقونات (نفس الصورة لجميع الكثافات لو ما عندكش نسخ أخرى) -->
-        <icon density="mdpi" src="res/icons/icon.png" />
-        <icon density="hdpi" src="res/icons/icon.png" />
-        <icon density="xhdpi" src="res/icons/icon.png" />
-        <icon density="xxhdpi" src="res/icons/icon.png" />
-        <icon density="xxxhdpi" src="res/icons/icon.png" />
+    <!-- ✅ الأيقونة -->
+    <icon src="res/icons/icon.png" />
 
-        <!-- الـ Splash (نفس الصورة لجميع الكثافات) -->
+    <!-- ✅ إعدادات splash -->
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="FadeSplashScreenDuration" value="300" />
+    <preference name="SplashShowOnlyFirstTime" value="false" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="3000" />
+
+    <platform name="android">
+        <icon density="mdpi" src="res/icons/icon.png" />
         <splash density="port-mdpi" src="res/splash/splash.png" />
-        <splash density="port-hdpi" src="res/splash/splash.png" />
-        <splash density="port-xhdpi" src="res/splash/splash.png" />
-        <splash density="port-xxhdpi" src="res/splash/splash.png" />
-        <splash density="port-xxxhdpi" src="res/splash/splash.png" />
     </platform>
 </widget>
