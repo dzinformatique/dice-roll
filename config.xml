@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.example.diceroll" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Dice Roll</name>
-    <description>لعبة النرد</description>
-    <author email="you@example.com" href="https://example.com">Your Name</author>
+    <description>Application de Dice Roll simple en HTML/CSS/JS</description>
+    <author email="wahab.inf@gmail.com" >Ramdani Abdelouahab</author>
     <content src="index.html"/>
-    <preference name="Fullscreen" value="true"/>
-    <preference name="Orientation" value="portrait"/>
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
     <platform name="android"/>
 </widget>
