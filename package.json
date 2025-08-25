@@ -1,0 +1,9 @@
+{
+  "name": "jeu-de-des",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Pas de build nécessaire pour HTML/CSS/JS'"
+  },
+  "dependencies": {}
+}
