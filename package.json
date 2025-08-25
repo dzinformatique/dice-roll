@@ -5,6 +5,6 @@
     "build": "cordova build android"
   },
   "devDependencies": {
-    "cordova-android": "^11.1.0"
+    "cordova-android": "^13.0.0"
   }
 }
