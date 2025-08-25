@@ -1,12 +1,9 @@
 {
   "name": "dice-roll",
   "version": "1.0.0",
-  "description": "لعبة النرد",
   "scripts": {
-    "start": "cordova serve",
     "build": "cordova build android"
   },
-  "dependencies": {},
   "devDependencies": {
     "cordova-android": "^11.1.0"
   }
