@@ -1,0 +1,6 @@
+{
+  "appId": "com.example.jeudedes",
+  "appName": "لعبة النرد",
+  "webDir": ".",
+  "bundledWebRuntime": false
+}
