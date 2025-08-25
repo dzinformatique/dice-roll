@@ -1,8 +1,8 @@
-name: Build Android APK & AAB
+name: Générer APK & AAB
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -21,9 +21,12 @@ jobs:
       - name: Install Capacitor CLI
         run: npm install -g @capacitor/cli
 
+      - name: Install Capacitor Android
+        run: npm install @capacitor/android
+
       - name: Create Capacitor Project
         run: |
-          npx cap init dice-game com.example.dicegame
+          npx cap init dice-game com.example.jeudedes
           npx cap add android
           npx cap copy
 
