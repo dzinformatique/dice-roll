@@ -26,6 +26,13 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    # ✅ نسخ الأيقونات و splash قبل إضافة Android
+    - name: Copy icons and splash
+      run: |
+        mkdir -p res/icons res/splash
+        cp assets/icons/icon.png res/icons/icon.png
+        cp assets/splash/splash.png res/splash/splash.png
+
     - name: Add Android platform
       run: cordova platform add android@13.0.0
 
