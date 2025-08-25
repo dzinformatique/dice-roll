@@ -1,9 +1,13 @@
 {
-  "name": "jeu-de-des",
+  "name": "dice-roll",
   "version": "1.0.0",
-  "private": true,
+  "description": "لعبة النرد",
   "scripts": {
-    "build": "echo 'Pas de build nécessaire pour HTML/CSS/JS'"
+    "start": "cordova serve",
+    "build": "cordova build android"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "cordova-android": "^11.1.0"
+  }
 }
