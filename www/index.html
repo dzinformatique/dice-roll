@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dice Roll</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #74ebd5, #9face6);
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .controls {
+      margin-bottom: 25px;
+      display: flex;
+      gap: 25px;
+    }
+
+    .btn-dice {
+      width: 60px;
+      height: 60px;
+      background: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-dice:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+      background: #f5f5f5;
+    }
+
+    .dice-container {
+      display: flex;
+      gap: 30px;
+    }
+
+    .dice {
+      width: 160px;
+      height: 160px;
+      background: white;
+      border-radius: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 8px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      cursor: pointer;
+      user-select: none;
+      padding: 20px;
+    }
+
+    .dot {
+      width: 25px;
+      height: 25px;
+      background: black;
+      border-radius: 50%;
+      margin: auto;
+      opacity: 0;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(1px, 1px) rotate(0deg); }
+      25% { transform: translate(-1px, -2px) rotate(-2deg); }
+      50% { transform: translate(-3px, 0px) rotate(2deg); }
+      75% { transform: translate(3px, 2px) rotate(0deg); }
+      100% { transform: translate(1px, -1px) rotate(-2deg); }
+    }
+
+    .rolling {
+      animation: shake 0.2s infinite;
+    }
+
+    @media (max-width: 700px) {
+      .dice-container {
+        flex-direction: column;
+        gap: 20px;
+      }
+      .dice {
+        width: 120px;
+        height: 120px;
+        padding: 15px;
+      }
+      .dice .dot {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <button id="oneDiceBtn" class="btn-dice">Ⅰ</button>
+    <button id="twoDiceBtn" class="btn-dice">Ⅱ</button>
+  </div>
+
+  <div class="dice-container" id="diceContainer"></div>
+
+  <script>
+    const diceFaces = {
+      1: [4],
+      2: [0, 8],
+      3: [0, 4, 8],
+      4: [0, 2, 6, 8],
+      5: [0, 2, 4, 6, 8],
+      6: [0, 2, 3, 5, 6, 8]
+    };
+
+    function createDots(container) {
+      for (let i = 0; i < 9; i++) {
+        const dot = document.createElement("div");
+        dot.classList.add("dot");
+        container.appendChild(dot);
+      }
+    }
+
+    function showFace(diceElement, num) {
+      const dots = diceElement.querySelectorAll(".dot");
+      dots.forEach((dot, i) => {
+        dot.style.opacity = diceFaces[num].includes(i) ? "1" : "0";
+      });
+    }
+
+    function createDice(id) {
+      const dice = document.createElement("div");
+      dice.classList.add("dice");
+      dice.id = id;
+      createDots(dice);
+      return dice;
+    }
+
+    function rollDice(diceElement) {
+      diceElement.classList.add("rolling");
+      let rollInterval = setInterval(() => {
+        let tempNum = Math.floor(Math.random() * 6) + 1;
+        showFace(diceElement, tempNum);
+      }, 150);
+
+      setTimeout(() => {
+        clearInterval(rollInterval);
+        diceElement.classList.remove("rolling");
+        let number = Math.floor(Math.random() * 6) + 1;
+        showFace(diceElement, number);
+      }, 5000);
+    }
+
+    const diceContainer = document.getElementById("diceContainer");
+    const oneDiceBtn = document.getElementById("oneDiceBtn");
+    const twoDiceBtn = document.getElementById("twoDiceBtn");
+
+    oneDiceBtn.addEventListener("click", () => {
+      diceContainer.innerHTML = "";
+      const dice1 = createDice("dice1");
+      diceContainer.appendChild(dice1);
+      showFace(dice1, 1);
+      dice1.addEventListener("click", () => rollDice(dice1));
+    });
+
+    twoDiceBtn.addEventListener("click", () => {
+      diceContainer.innerHTML = "";
+      const dice1 = createDice("dice1");
+      const dice2 = createDice("dice2");
+      diceContainer.appendChild(dice1);
+      diceContainer.appendChild(dice2);
+      showFace(dice1, 1);
+      showFace(dice2, 1);
+
+      const rollBoth = () => {
+        rollDice(dice1);
+        rollDice(dice2);
+      };
+
+      dice1.addEventListener("click", rollBoth);
+      dice2.addEventListener("click", rollBoth);
+    });
+  </script>
+</body>
+</html>
