@@ -13,10 +13,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4   # v4 آخر نسخة
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '18'
 
@@ -26,19 +26,19 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    # ✅ نسخ الأيقونات و splash
+    # ✅ الأيقونات و splash (لو عندك فعلاً هذي الملفات)
     - name: Copy icons and splash
       run: |
         mkdir -p res/icons res/splash
-        cp assets/icons/icon.png res/icons/icon.png
-        cp assets/splash/splash.png res/splash/splash.png
+        if [ -f assets/icons/icon.png ]; then cp assets/icons/icon.png res/icons/icon.png; fi
+        if [ -f assets/splash/splash.png ]; then cp assets/splash/splash.png res/splash/splash.png; fi
 
-    # ✅ إضافة plugin السبلاش
+    # ✅ إضافة plugin السبلاش (يتجاوز لو موجود)
     - name: Add splashscreen plugin
-      run: cordova plugin add cordova-plugin-splashscreen
+      run: cordova plugin add cordova-plugin-splashscreen || echo "Already exists"
 
     - name: Add Android platform
-      run: cordova platform add android@13.0.0
+      run: cordova platform add android@12.0.1   # 13 غير متوفرة حالياً على npm
 
     # بناء AAB (Google Play)
     - name: Build Android AAB
@@ -51,9 +51,9 @@ jobs:
     # استخراج keystore من GitHub Secrets
     - name: Decode Keystore
       run: |
-        echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > my-release-key.jks
+        echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > my-release-key.jks
 
-    # تحديد اسم الـ APK الصحيح قبل التوقيع
+    # تحديد اسم APK الصحيح قبل التوقيع
     - name: Set APK file path
       run: |
         if [ -f "platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk" ]; then
@@ -67,16 +67,16 @@ jobs:
       run: |
         jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
           -keystore my-release-key.jks \
-          -storepass ${{ secrets.KEYSTORE_PASSWORD }} \
-          -keypass ${{ secrets.KEY_PASSWORD }} \
-          $APK_FILE \
-          ${{ secrets.KEY_ALIAS }}
+          -storepass "${{ secrets.KEYSTORE_PASSWORD }}" \
+          -keypass "${{ secrets.KEY_PASSWORD }}" \
+          "$APK_FILE" \
+          "${{ secrets.KEY_ALIAS }}"
 
     # محاذاة APK (zipalign)
     - name: Align APK
       run: |
         $ANDROID_HOME/build-tools/34.0.0/zipalign -v 4 \
-          $APK_FILE \
+          "$APK_FILE" \
           platforms/android/app/build/outputs/apk/release/app-release-signed.apk
 
     # رفع الملفات النهائية إلى GitHub Releases
